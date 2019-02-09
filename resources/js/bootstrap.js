@@ -1,11 +1,5 @@
-window._ = require('lodash');
+import _ from 'lodash';
 import M from 'materialize-css';
-document.addEventListener('DOMContentLoaded', function() {
-    let elems = document.querySelectorAll('.sidenav');
-    M.Sidenav.init(elems, {
-        edge: 'right'
-    });
-});
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

@@ -7,16 +7,27 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li v-for="link in navItems">
-                        <router-link :to="link.router">{{ link.label }}</router-link>
-                    </li>
+                    <router-link v-for="link in navItems"
+                                 :to="link.router"
+                                 :key="link.router.name"
+                                 tag="li"
+                                 active-class="active"
+                    >
+                        <a class="waves-effect">{{ link.label }}</a>
+                    </router-link>
                 </ul>
             </div>
         </nav>
         <ul class="sidenav" id="mobile-nav">
-            <li v-for="link in navItems">
-                <router-link :to="link.router">{{ link.label }}</router-link>
-            </li>
+            <router-link v-for="link in navItems"
+                         :to="link.router"
+                         :key="link.router.name"
+                         tag="li"
+                         active-class="active"
+                         @click.native="closeSidebar"
+            >
+                <a class="waves-effect">{{ link.label }}</a>
+            </router-link>
         </ul>
     </div>
 </template>
@@ -32,8 +43,19 @@
                         },
                         label: 'Marks'
                     }
-                ]
+                ],
+                sidebar: null
             }
+        },
+        methods: {
+            closeSidebar: function () {
+                this.sidebar.close();
+            }
+        },
+        mounted() {
+            this.sidebar = M.Sidenav.init(document.querySelector('.sidenav'), {
+                edge: 'right',
+            });
         }
     }
 </script>

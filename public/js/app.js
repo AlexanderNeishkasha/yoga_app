@@ -136,6 +136,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AppHeader',
   data: function data() {
@@ -145,8 +156,19 @@ __webpack_require__.r(__webpack_exports__);
           name: 'marks'
         },
         label: 'Marks'
-      }]
+      }],
+      sidebar: null
     };
+  },
+  methods: {
+    closeSidebar: function closeSidebar() {
+      this.sidebar.close();
+    }
+  },
+  mounted: function mounted() {
+    this.sidebar = M.Sidenav.init(document.querySelector('.sidenav'), {
+      edge: 'right'
+    });
   }
 });
 
@@ -30195,16 +30217,19 @@ var render = function() {
           },
           _vm._l(_vm.navItems, function(link) {
             return _c(
-              "li",
+              "router-link",
+              {
+                key: link.router.name,
+                attrs: { to: link.router, tag: "li", "active-class": "active" }
+              },
               [
-                _c("router-link", { attrs: { to: link.router } }, [
+                _c("a", { staticClass: "waves-effect" }, [
                   _vm._v(_vm._s(link.label))
                 ])
-              ],
-              1
+              ]
             )
           }),
-          0
+          1
         )
       ])
     ]),
@@ -30214,16 +30239,24 @@ var render = function() {
       { staticClass: "sidenav", attrs: { id: "mobile-nav" } },
       _vm._l(_vm.navItems, function(link) {
         return _c(
-          "li",
+          "router-link",
+          {
+            key: link.router.name,
+            attrs: { to: link.router, tag: "li", "active-class": "active" },
+            nativeOn: {
+              click: function($event) {
+                return _vm.closeSidebar($event)
+              }
+            }
+          },
           [
-            _c("router-link", { attrs: { to: link.router } }, [
+            _c("a", { staticClass: "waves-effect" }, [
               _vm._v(_vm._s(link.label))
             ])
-          ],
-          1
+          ]
         )
       }),
-      0
+      1
     )
   ])
 }
@@ -44167,20 +44200,26 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var _components_template_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/template/template */ "./resources/js/components/template/template.vue");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var _components_template_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/template/template */ "./resources/js/components/template/template.vue");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
- // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-var app = new Vue({
+
+var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#app',
   render: function render(h) {
-    return h(_components_template_template__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    return h(_components_template_template__WEBPACK_IMPORTED_MODULE_3__["default"]);
   },
-  router: _router__WEBPACK_IMPORTED_MODULE_0__["default"]
+  router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
+  beforeCreate: function beforeCreate() {
+    _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'marks'
+    });
+  }
 });
 
 /***/ }),
@@ -44194,16 +44233,12 @@ var app = new Vue({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var materialize_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! materialize-css */ "./node_modules/materialize-css/dist/js/materialize.js");
-/* harmony import */ var materialize_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(materialize_css__WEBPACK_IMPORTED_MODULE_0__);
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var materialize_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! materialize-css */ "./node_modules/materialize-css/dist/js/materialize.js");
+/* harmony import */ var materialize_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(materialize_css__WEBPACK_IMPORTED_MODULE_1__);
 
-document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.sidenav');
-  materialize_css__WEBPACK_IMPORTED_MODULE_0___default.a.Sidenav.init(elems, {
-    edge: 'right'
-  });
-});
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
