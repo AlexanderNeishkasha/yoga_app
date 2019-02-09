@@ -7,8 +7,7 @@
         <form action="/api/mark">
             <div class="row">
                 <app-datepicker></app-datepicker>
-                <app-mark-button :time="'утром'"></app-mark-button>
-                <app-mark-button :time="'вечером'"></app-mark-button>
+                <app-mark-button v-for="button in buttons" :button="button" :key="button.time"></app-mark-button>
             </div>
         </form>
     </div>
@@ -22,6 +21,20 @@
         components: {
             AppDatepicker,
             AppMarkButton
+        },
+        data() {
+            return {
+                buttons: [
+                    {
+                        time: 'morning',
+                        status: false
+                    },
+                    {
+                        time: 'evening',
+                        status: true
+                    }
+                ]
+            }
         }
     }
 </script>
