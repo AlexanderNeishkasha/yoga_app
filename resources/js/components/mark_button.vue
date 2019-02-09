@@ -9,6 +9,7 @@
         <button type="button"
                 class="btn-large waves-effect waves-light col s12"
                 :class="btnClass"
+                @click="$emit('change')"
         >
             {{ btnText }}
         </button>
@@ -18,15 +19,15 @@
 <script>
     export default {
         name: "mark_button",
-        props: ['button'],
+        props: ['time', 'status'],
         computed: {
             btnText() {
-                let txt = this.button.status ? 'Я не занимался ' : 'Я занимался ';
-                txt += this.button.time == 'morning' ? 'утром' : 'вечером';
+                let txt = !this.status ? 'Я не занимался ' : 'Я занимался ';
+                txt += this.time == 'morning' ? 'утром' : 'вечером';
                 return txt;
             },
             btnClass() {
-                return this.button.status ? 'red' : '';
+                return !this.status ? 'red' : '';
             }
         }
     }

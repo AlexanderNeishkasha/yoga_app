@@ -1,3 +1,10 @@
+<style scoped>
+    nav {
+        position: relative;
+        z-index: 10;
+    }
+</style>
+
 <template>
     <div>
         <nav>
@@ -31,6 +38,7 @@
         </ul>
     </div>
 </template>
+
 <script>
     export default {
         name: 'AppHeader',

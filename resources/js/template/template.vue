@@ -1,6 +1,7 @@
 <style scoped>
     #content {
         margin-top: 30px;
+        position: relative;
     }
 </style>
 <template>
