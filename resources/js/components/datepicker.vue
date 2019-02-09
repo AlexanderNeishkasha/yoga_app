@@ -6,28 +6,36 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         name: "datepicker",
         props: ['date'],
         methods: {
             changeDate() {
-                this.$emit('change', this.datepicker.date);
+                this.$emit('change', this.dateForMarks);
             }
         },
         mounted() {
-            console.log(this.date);
             this.datepicker = M.Datepicker.init(this.$el.querySelector('.datepicker'), {
                 autoClose: true,
                 format: 'dd.mm.yyyy',
-                defaultDate: this.date,
+                defaultDate: this.dateForPicker,
                 setDefaultDate: true,
                 onSelect: this.changeDate
             });
         },
+        computed: {
+            dateForPicker() {
+                return moment(this.date, 'YYYY-MM-DD').toDate();
+            },
+            dateForMarks() {
+                return moment(this.datepicker.date).format('YYYY-MM-DD');
+            }
+        },
         watch: {
-            date() {
-                this.datepicker.setDate(this.date);
-                return this.date;
+            dateForPicker() {
+                this.datepicker.setDate(this.dateForPicker);
             }
         }
     }

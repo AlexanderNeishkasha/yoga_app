@@ -4,16 +4,22 @@
 
 <template>
     <div id="marks">
-        <form v-if="!loading">
-            <div class="row">
-                <app-datepicker :date="this.marks.date" @change="changeDate"></app-datepicker>
-                <app-mark-button :time="'morning'" :status="this.marks.morning"
-                                 @change="changeMorning"></app-mark-button>
-                <app-mark-button :time="'evening'" :status="this.marks.evening"
-                                 @change="changeEvening"></app-mark-button>
-            </div>
-        </form>
-        <app-loader v-else></app-loader>
+        <transition enter-active-class="animated fadeIn"
+                    leave-active-class="animated fadeOut"
+                    mode="out-in"
+                    appear
+        >
+            <form v-if="!loading">
+                <div class="row">
+                    <app-datepicker :date="this.marks.date" @change="changeDate"></app-datepicker>
+                    <app-mark-button :time="'morning'" :status="this.marks.morning"
+                                     @change="changeMorning"></app-mark-button>
+                    <app-mark-button :time="'evening'" :status="this.marks.evening"
+                                     @change="changeEvening"></app-mark-button>
+                </div>
+            </form>
+            <app-loader v-else></app-loader>
+        </transition>
     </div>
 </template>
 
@@ -33,7 +39,7 @@
         data() {
             return {
                 marks: {
-                    date: new Date(),
+                    date: moment().format('YYYY-MM-DD'),
                     morning: false,
                     evening: false,
                 },
@@ -43,36 +49,55 @@
         methods: {
             changeMorning() {
                 this.marks.morning = !this.marks.morning;
+                this.saveMark();
             },
             changeEvening() {
                 this.marks.evening = !this.marks.evening;
+                this.saveMark();
             },
             changeDate(date) {
                 this.marks.date = date;
+                this.loadMarks();
             },
             loadMarks() {
                 this.loading = true;
-                let url = new URL('api/marks/get', window.location.protocol + '//' + window.location.host);
-                url.search = new URLSearchParams([['date', moment(this.marks.date).format('YYYY-MM-DD')]]);
+                let url = new URL('/api/marks/get', window.location.protocol + '//' + window.location.host);
+                url.search = new URLSearchParams([['date', this.marks.date]]);
                 fetch(url, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
-                }).then(function(response) {
+                }).then(response => {
                     return response.json();
-                }).then(function(json) {
+                }).then(json => {
                     if (json.success) {
-                        json.data.marks.date = moment(json.data.marks.date, 'YYYY-MM-DD').toDate();
                         this.marks = json.data.marks;
                     } else {
                         M.toast({html: 'Произошла ошибка: ' + json.message})
                     }
-                }.bind(this)).catch(function(ex) {
+                }).catch(ex => {
                     M.toast({html: 'Произошла ошибка: ' + ex})
-                }).finally(function() {
+                }).finally(() => {
                     this.loading = false;
-                }.bind(this));
+                });
             },
+            saveMark() {
+                fetch('/api/marks/update', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.marks)
+                }).then(response => {
+                    return response.json();
+                }).then(json => {
+                    if (!json.success) {
+                        M.toast({html: 'Произошла ошибка: ' + json.message})
+                    }
+                }).catch(ex => {
+                    M.toast({html: 'Произошла ошибка: ' + ex});
+                });
+            }
         },
         beforeMount() {
             this.loadMarks();

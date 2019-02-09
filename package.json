@@ -22,6 +22,7 @@
         "vue-template-compiler": "^2.5.22"
     },
     "dependencies": {
+        "animate.css": "^3.7.0",
         "materialize-css": "^1.0.0-rc.2",
         "moment": "^2.24.0",
         "vue-router": "^3.0.2",
