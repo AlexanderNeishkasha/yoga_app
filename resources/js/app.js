@@ -1,7 +1,7 @@
 import './bootstrap';
 import Vue from 'vue';
 import router from './router';
-import AppTemplate from './components/template/template';
+import AppTemplate from './template/template';
 
 const app = new Vue({
     el: '#app',

@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router';
 import Vue from 'vue';
-import AppMarks from './components/pages/marks';
+import AppMarks from './pages/marks';
 
 Vue.use(VueRouter);
 
