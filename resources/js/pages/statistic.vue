@@ -5,6 +5,13 @@
             <app-datepicker label="Дата окончания" :date="dates.end" @change="changeEndDate"></app-datepicker>
             <canvas id="statistic-for-days"></canvas>
         </div>
+        <transition enter-active-class="animated fadeIn"
+                    leave-active-class="animated fadeOut"
+                    mode="out-in"
+                    appear
+        >
+            <app-loader v-if="loading"></app-loader>
+        </transition>
     </div>
 </template>
 
