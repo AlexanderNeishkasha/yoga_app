@@ -5,7 +5,7 @@ import AppStatistic from './pages/statistic';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes: [
         {
@@ -16,7 +16,13 @@ export default new VueRouter({
         {
             path: '/statistic',
             component: AppStatistic,
-            name: 'statistic'
+            name: 'statistic',
         }
     ]
 });
+
+router.afterEach(to => {
+    localStorage.route = to.name;
+});
+
+export default router;
