@@ -13,7 +13,10 @@
         props: ['date', 'label'],
         methods: {
             changeDate() {
-                this.$emit('change', this.dateForMarks);
+                this.$emit('change', this.dateForMarks());
+            },
+            dateForMarks() {
+                return moment(this.datepicker.date).format('YYYY-MM-DD');
             }
         },
         mounted() {
@@ -28,14 +31,6 @@
         computed: {
             dateForPicker() {
                 return moment(this.date, 'YYYY-MM-DD').toDate();
-            },
-            dateForMarks() {
-                return moment(this.datepicker.date).format('YYYY-MM-DD');
-            }
-        },
-        watch: {
-            dateForPicker() {
-                this.datepicker.setDate(this.dateForPicker);
             }
         }
     }

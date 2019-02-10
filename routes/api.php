@@ -16,4 +16,5 @@ use Illuminate\Http\Request;
 Route::prefix('marks')->name('marks.')->group(function () {
    Route::get('get', 'MarksController@get');
    Route::post('update', 'MarksController@updateOrCreate');
+   Route::get('statistic', 'MarksController@statistic');
 });
