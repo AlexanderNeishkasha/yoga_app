@@ -1,7 +1,7 @@
 <template>
     <div class="input-field col s12">
         <input type="text" name="date" id="date" class="datepicker">
-        <label for="date">Выбери дату</label>
+        <label for="date">{{ label }}</label>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 
     export default {
         name: "datepicker",
-        props: ['date'],
+        props: ['date', 'label'],
         methods: {
             changeDate() {
                 this.$emit('change', this.dateForMarks);

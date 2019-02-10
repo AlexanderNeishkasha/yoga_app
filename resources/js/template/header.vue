@@ -8,7 +8,7 @@
 <template>
     <div>
         <nav>
-            <div class="nav-wrapper">
+            <div class="nav-wrapper container">
                 <a href="#" class="brand-logo">Yoga</a>
                 <a href="#" data-target="mobile-nav" class="right sidenav-trigger">
                     <i class="material-icons">menu</i>
@@ -49,7 +49,13 @@
                         router: {
                             name: 'marks'
                         },
-                        label: 'Marks'
+                        label: 'Отметки'
+                    },
+                    {
+                        router: {
+                            name: 'statistic'
+                        },
+                        label: 'Статистика'
                     }
                 ],
                 sidebar: null

@@ -11,7 +11,7 @@
         >
             <form v-if="!loading">
                 <div class="row">
-                    <app-datepicker :date="this.marks.date" @change="changeDate"></app-datepicker>
+                    <app-datepicker :date="this.marks.date" @change="changeDate" label="Выбери дату"></app-datepicker>
                     <app-mark-button :time="'morning'" :status="this.marks.morning"
                                      @change="changeMorning"></app-mark-button>
                     <app-mark-button :time="'evening'" :status="this.marks.evening"
