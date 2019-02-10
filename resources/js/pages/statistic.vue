@@ -23,15 +23,23 @@
         data() {
             return {
                 marks: [],
-                dates: {
-                    start: moment().startOf('month').format('YYYY-MM-DD'),
-                    end: moment().format('YYYY-MM-DD'),
-                },
+                dates: this.defaultDate(),
                 loading: false,
                 statisticForDaysChart: null
             }
         },
         methods: {
+            defaultDate() {
+                let json = localStorage.getItem('default_date');
+                if (json) return JSON.parse(json);
+                return {
+                    start: moment().startOf('month').format('YYYY-MM-DD'),
+                    end: moment().format('YYYY-MM-DD'),
+                };
+            },
+            saveDatesToStorage() {
+                localStorage.setItem('default_date', JSON.stringify(this.dates));
+            },
             statisticForDaysData() {
                 return {
                     datasets: [{
@@ -49,10 +57,12 @@
             },
             changeStartDate(date) {
                 this.dates.start = date;
+                this.saveDatesToStorage();
                 this.loadMarks();
             },
             changeEndDate(date) {
                 this.dates.end = date;
+                this.saveDatesToStorage();
                 this.loadMarks();
             },
             loadMarks() {
