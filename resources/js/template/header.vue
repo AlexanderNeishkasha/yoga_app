@@ -3,13 +3,20 @@
         position: relative;
         z-index: 10;
     }
+    .brand-logo {
+        display: inline-flex;
+        align-items: center;
+    }
 </style>
 
 <template>
     <div>
         <nav>
             <div class="nav-wrapper container">
-                <a href="#" class="brand-logo">Yoga</a>
+                <router-link :to="{name: 'marks'}" class="brand-logo">
+                    <img src="img/header_logo.png" alt="Logo">
+                    Yoga
+                </router-link>
                 <a href="#" data-target="mobile-nav" class="right sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
