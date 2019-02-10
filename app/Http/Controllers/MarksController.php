@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetMarks;
+use App\Http\Requests\Statistic;
+use App\Http\Requests\UpdateMarks;
 use App\Models\Marks;
 use App\Services\MarksService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class MarksController extends Controller
 {
@@ -16,7 +17,7 @@ class MarksController extends Controller
         $this->marksService = $marksService;
     }
 
-    public function get(Request $request)
+    public function get(GetMarks $request)
     {
         $marks = Marks::firstOrCreate($request->only('date'));
         return response()->json([
@@ -25,7 +26,7 @@ class MarksController extends Controller
         ]);
     }
 
-    public function updateOrCreate(Request $request)
+    public function updateOrCreate(UpdateMarks $request)
     {
         $success = (bool) Marks::updateOrCreate($request->only('date'), $request->all());
         return response()->json([
@@ -34,7 +35,7 @@ class MarksController extends Controller
         ]);
     }
 
-    public function statistic(Request $request)
+    public function statistic(Statistic $request)
     {
         $marks = $this->marksService->getAllMarksFromDates($request->start_date, $request->end_date);
         return response()->json(['success' => true, 'data' => ['marks' => $marks]]);
