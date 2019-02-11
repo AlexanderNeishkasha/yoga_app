@@ -1,7 +1,13 @@
-require('./bootstrap');
-window.Vue = require('vue');
-const files = require.context('./', true, /\.vue$/i);
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+import './bootstrap';
+import Vue from 'vue';
+import router from './router';
+import AppTemplate from './template/template';
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    render: h => h(AppTemplate),
+    router,
+    beforeCreate() {
+        router.push({name: localStorage.route || 'marks'});
+    }
 });

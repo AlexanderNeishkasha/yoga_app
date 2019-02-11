@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('marks')->name('marks.')->group(function () {
+   Route::get('get', 'MarksController@get');
+   Route::post('update', 'MarksController@updateOrCreate');
+   Route::get('statistic', 'MarksController@statistic');
 });
