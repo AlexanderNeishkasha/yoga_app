@@ -8,6 +8,7 @@
         <link rel="icon" sizes="192x192" href="{{ asset('img/logo_icon_for_tab.png') }}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
     </head>
     <body>
     <div id="app"></div>
