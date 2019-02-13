@@ -1,8 +1,10 @@
 <?php
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
 require 'vendor/deployer/recipes/recipe/yarn.php';
+require 'vendor/deployer/recipes/recipe/cachetool.php';
 
 
 // Project name
@@ -45,7 +47,8 @@ task('yarn:prod', function () {
 host('yoga.yanster.one')
     ->stage('production')
     ->user('yanster')
-    ->set('deploy_path', '/home/yanster/apps/yoga/');
+    ->set('deploy_path', '/home/yanster/apps/yoga/')
+    ->set('cachetool', '/var/run/php/php7.2-fpm.sock');
 
 // Tasks
 
@@ -79,6 +82,7 @@ task('deploy', [
     'cleanup',
 ]);
 
+after('deploy:symlink', 'cachetool:clear:opcache');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
