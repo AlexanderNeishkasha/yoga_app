@@ -85,20 +85,16 @@
                 }).then(json => {
                     if (json.success) {
                         this.marks = json.data.marks;
+                        this.statisticForDaysChart.data = this.statisticForDaysData();
+                        this.statisticForDaysChart.update();
                     } else {
                         M.toast({html: 'Произошла ошибка: ' + json.message})
                     }
                 }).catch(ex => {
-                    M.toast({html: 'Произошла ошибка: ' + ex})
+                    M.toast({html: 'Произошла ошибка: ' + ex.message})
                 }).finally(() => {
                     this.loading = false;
                 });
-            }
-        },
-        watch: {
-            marks() {
-                this.statisticForDaysChart.data = this.statisticForDaysData();
-                this.statisticForDaysChart.update();
             }
         },
         beforeMount() {
