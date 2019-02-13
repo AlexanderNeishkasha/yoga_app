@@ -27,7 +27,9 @@
                                  tag="li"
                                  active-class="active"
                     >
-                        <a class="waves-effect">{{ link.label }}</a>
+                        <a class="waves-effect">
+                            {{ link.label }}
+                        </a>
                     </router-link>
                 </ul>
             </div>
@@ -40,7 +42,10 @@
                          active-class="active"
                          @click.native="closeSidebar"
             >
-                <a class="waves-effect">{{ link.label }}</a>
+                <a class="waves-effect">
+                    <i class="material-icons">{{ link.icon }}</i>
+                    {{ link.label }}
+                </a>
             </router-link>
         </ul>
     </div>
@@ -56,13 +61,15 @@
                         router: {
                             name: 'marks'
                         },
-                        label: 'Отметки'
+                        label: 'Отметки',
+                        icon: 'check_box'
                     },
                     {
                         router: {
                             name: 'statistic'
                         },
-                        label: 'Статистика'
+                        label: 'Статистика',
+                        icon: 'insert_chart'
                     }
                 ],
                 sidebar: null
