@@ -9,7 +9,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/marks',
+            path: '/',
             component: AppMarks,
             name: 'marks'
         },
@@ -17,12 +17,16 @@ const router = new VueRouter({
             path: '/statistic',
             component: AppStatistic,
             name: 'statistic',
+        },
+        {
+            path: '/*',
+            component: AppMarks
         }
     ]
 });
 
 router.afterEach(to => {
-    localStorage.route = to.name;
+    localStorage.route = to.name ? to.name : 'marks';
 });
 
 export default router;
