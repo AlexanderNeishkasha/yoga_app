@@ -26,7 +26,8 @@
                                  :to="link.router"
                                  :key="link.router.name"
                                  tag="li"
-                                 active-class="active"
+                                 exact
+                                 exact-active-class="active"
                     >
                         <a class="waves-effect">
                             {{ link.label }}
@@ -40,7 +41,8 @@
                          :to="link.router"
                          :key="link.router.name"
                          tag="li"
-                         active-class="active"
+                         exact
+                         exact-active-class="active"
                          @click.native="closeSidebar"
             >
                 <a class="waves-effect">
