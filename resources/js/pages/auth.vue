@@ -2,7 +2,6 @@
     <div>
         <transition enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
-                    mode="out-in"
                     appear
         >
             <div id="auth" v-if="!loading">
@@ -10,7 +9,7 @@
                                     :telegram-login="telegramLogin"
                                     size="large"
                                     :userpic="false"
-                                    radius="0"
+                                    radius="2"
                                     @callback="auth">
                 </app-telegram-login>
             </div>
@@ -75,6 +74,10 @@
     #auth {
         display: flex;
         justify-content: center;
-        margin-top: 30px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        margin-bottom: 30px;
+        left: 0;
     }
 </style>
