@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import Chart from 'chart.js';
     import moment from 'moment';
     import AppDatepicker from '../components/datepicker';
@@ -74,21 +75,24 @@
             },
             loadMarks() {
                 this.loading = true;
-                let url = new URL('/api/marks/statistic', window.location.protocol + '//' + window.location.host);
-                url.search = new URLSearchParams([['start_date', this.dates.start], ['end_date', this.dates.end]]);
-                fetch(url, {
+                axios.get('api/marks/statistic', {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.getters.token
+                    },
+                    params: {
+                        'start_date': this.dates.start,
+                        'end_date': this.dates.end
                     }
                 }).then(response => {
-                    return response.json();
+                    return response.data;
                 }).then(json => {
                     if (json.success) {
                         this.marks = json.data.marks;
                         this.statisticForDaysChart.data = this.statisticForDaysData();
                         this.statisticForDaysChart.update();
                     } else {
-                        M.toast({html: 'Произошла ошибка: ' + json.message})
+                        throw new Error('Произошла ошибка: ' + json.message);
                     }
                 }).catch(ex => {
                     M.toast({html: 'Произошла ошибка: ' + ex.message})

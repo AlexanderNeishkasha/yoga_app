@@ -10,21 +10,23 @@ namespace App\Services;
 
 use App\Models\Marks;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Auth;
 
 class MarksService
 {
     public function getAllMarksFromDates($startDate, $endDate)
     {
-        $marks = Marks::whereBetween('date', [$startDate, $endDate])->get();
+        $user = Auth::user();
+        $marks = Marks::forUser($user->id)->whereBetween('date', [$startDate, $endDate])->get();
         $period = CarbonPeriod::create($startDate, $endDate);
         $notFoundedMarks = [];
         foreach ($period as $date) {
             if (!$marks->contains('date', $date->format('Y-m-d'))) {
-                array_push($notFoundedMarks, ['date' => $date->format('Y-m-d')]);
+                array_push($notFoundedMarks, ['date' => $date->format('Y-m-d'), 'user_id' => $user->id]);
             }
         }
         Marks::insert($notFoundedMarks);
-        $insertedMarks = Marks::whereIn('date', $notFoundedMarks)->get();
+        $insertedMarks = Marks::forUser($user->id)->whereIn('date', $notFoundedMarks)->get();
         $marks->merge($insertedMarks);
         return $marks;
     }

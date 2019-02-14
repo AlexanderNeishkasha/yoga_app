@@ -12,4 +12,9 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     protected $fillable = ['id', 'first_name', 'last_name', 'username', 'photo_url', 'auth_date'];
+
+    public function marks()
+    {
+        return $this->hasMany(Marks::class);
+    }
 }
