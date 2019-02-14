@@ -3,7 +3,7 @@
             mode="callback"
             telegram-login="yoga_application_bot"
             size="large"
-            redirect-url="/api/auth">
+            @callback="auth">
     </app-telegram-login>
 </template>
 

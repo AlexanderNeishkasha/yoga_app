@@ -48,7 +48,7 @@ host('yoga.yanster.one')
     ->stage('production')
     ->user('yanster')
     ->set('deploy_path', '/home/yanster/apps/yoga/')
-    ->set('cachetool', '/var/run/php/php7.2-fpm.sock');
+    ->set('cachetool', '/var/run/php/php7.2-fpm-yoga.sock');
 
 // Tasks
 
