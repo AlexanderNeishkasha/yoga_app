@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Marks extends Model
 {
@@ -14,5 +15,9 @@ class Marks extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeForUser($query, $user_id)
+    {
+        return $query->whereUserId($user_id);
+    }
 }
 

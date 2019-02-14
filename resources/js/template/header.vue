@@ -3,6 +3,7 @@
         position: relative;
         z-index: 10;
     }
+
     .brand-logo {
         display: inline-flex;
         align-items: center;
@@ -21,7 +22,7 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <router-link v-for="link in navItems"
+                    <router-link v-for="link in navigation"
                                  :to="link.router"
                                  :key="link.router.name"
                                  tag="li"
@@ -35,7 +36,7 @@
             </div>
         </nav>
         <ul class="sidenav" id="mobile-nav">
-            <router-link v-for="link in navItems"
+            <router-link v-for="link in navigation"
                          :to="link.router"
                          :key="link.router.name"
                          tag="li"
@@ -56,23 +57,46 @@
         name: 'AppHeader',
         data() {
             return {
-                navItems: [
-                    {
-                        router: {
-                            name: 'marks'
+                navItems: {
+                    auth: [
+                        {
+                            router: {
+                                name: 'marks'
+                            },
+                            label: 'Отметки',
+                            icon: 'check_box'
                         },
-                        label: 'Отметки',
-                        icon: 'check_box'
-                    },
-                    {
-                        router: {
-                            name: 'statistic'
+                        {
+                            router: {
+                                name: 'statistic'
+                            },
+                            label: 'Статистика',
+                            icon: 'insert_chart'
                         },
-                        label: 'Статистика',
-                        icon: 'insert_chart'
-                    }
-                ],
+                        {
+                            router: {
+                                name: 'logout'
+                            },
+                            label: 'Выход',
+                            icon: 'exit_to_app'
+                        }
+                    ],
+                    guest: [
+                        {
+                            router: {
+                                name: 'auth'
+                            },
+                            label: 'Вход',
+                            icon: 'account_box'
+                        }
+                    ]
+                },
                 sidebar: null
+            }
+        },
+        computed: {
+            navigation() {
+                return this.$store.getters.checkLogin ? this.navItems.auth : this.navItems.guest;
             }
         },
         methods: {

@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('username')->nullable();
             $table->string('photo_url')->nullable();
-            $table->timestamp('auth_date')->nullable();
+            $table->unsignedInteger('auth_date')->nullable();
             $table->timestamps();
         });
     }
