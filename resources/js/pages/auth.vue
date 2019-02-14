@@ -1,28 +1,55 @@
 <template>
-    <div id="auth">
-        <app-telegram-login
-                mode="callback"
-                telegram-login="yoga_appliction_test_bot"
-                size="large"
-                :userpic="false"
-                radius="0"
-                @callback="auth">
-        </app-telegram-login>
+    <div>
+        <transition enter-active-class="animated fadeIn"
+                    leave-active-class="animated fadeOut"
+                    mode="out-in"
+                    appear
+        >
+            <div id="auth" v-if="!loading">
+                <app-telegram-login mode="callback"
+                                    :telegram-login="telegramLogin"
+                                    size="large"
+                                    :userpic="false"
+                                    radius="0"
+                                    @callback="auth">
+                </app-telegram-login>
+            </div>
+            <app-loader v-else></app-loader>
+        </transition>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     import AppTelegramLogin from '../components/telegram_login';
+    import AppLoader from '../components/loader';
 
     export default {
         name: "auth",
         components: {
-            AppTelegramLogin
+            AppTelegramLogin,
+            AppLoader
+        },
+        data() {
+            return {
+                telegramLogin: false,
+                loading: true
+            }
         },
         methods: {
             auth(user) {
                 console.log(user);
             }
+        },
+        beforeMount() {
+            axios.get('api/tg/login').then(response => {
+                return response.data;
+            }).then(response => {
+                if (response.success) {
+                    this.telegramLogin = response.data;
+                }
+                this.loading = false;
+            });
         }
     }
 </script>

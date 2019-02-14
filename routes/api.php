@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('tg/login', 'TelegramController@getLogin');
+
 Route::prefix('marks')->name('marks.')->group(function () {
    Route::get('get', 'MarksController@get');
    Route::post('update', 'MarksController@updateOrCreate');
