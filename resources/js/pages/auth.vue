@@ -45,8 +45,9 @@
                     return response.data;
                 }).then(response => {
                     if (response.success) {
-                        this.saveToken(response.data.token);
-                        this.saveUserData(response.data.user);
+                        this.$store.dispatch('setToken', response.data.token);
+                        this.$store.dispatch('setUser', response.data.user);
+                        this.$router.push({name: 'marks'});
                     } else {
                         throw new Error(response.message);
                     }
@@ -55,12 +56,6 @@
                 }).finally(() => {
                     this.loading = false;
                 });
-            },
-            saveUserData(user) {
-                localStorage.user = JSON.stringify(user);
-            },
-            saveToken(token) {
-                localStorage.token = token;
             }
         },
         beforeMount() {

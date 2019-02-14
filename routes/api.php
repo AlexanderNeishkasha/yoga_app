@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('tg/login', 'TelegramController@getLogin');
 Route::post('auth', 'AuthController@auth');
+Route::post('logout', 'AuthController@logout');
 
 Route::prefix('marks')->name('marks.')->group(function () {
    Route::get('get', 'MarksController@get');
