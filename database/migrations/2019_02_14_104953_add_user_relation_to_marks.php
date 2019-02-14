@@ -20,7 +20,7 @@ class AddUserRelationToMarks extends Migration
             $table->unsignedInteger('user_id')->nullable()->after('id');
         });
         if (Marks::exists()) {
-            Marks::update(['user_id' => $user->id]);
+            Marks::query()->update(['user_id' => $user->id]);
         }
         Schema::table('marks', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->nullable(false)->change();
