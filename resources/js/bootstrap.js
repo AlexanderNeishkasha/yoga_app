@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import M from 'materialize-css';
+import axios from 'axios';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

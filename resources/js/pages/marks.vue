@@ -24,6 +24,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import {toast} from 'materialize-css';
     import moment from 'moment';
     import AppDatepicker from '../components/datepicker';
     import AppMarkButton from '../components/mark_button';
@@ -61,41 +63,41 @@
             },
             loadMarks() {
                 this.loading = true;
-                let url = new URL('/api/marks/get', window.location.protocol + '//' + window.location.host);
-                url.search = new URLSearchParams([['date', this.marks.date]]);
-                fetch(url, {
+                axios.get('api/marks/get', {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.getters.token
+                    },
+                    params: {
+                        date: this.marks.date
                     }
                 }).then(response => {
-                    return response.json();
+                    return response.data;
                 }).then(json => {
                     if (json.success) {
                         this.marks = json.data.marks;
                     } else {
-                        M.toast({html: 'Произошла ошибка: ' + json.message})
+                        toast({html: 'Произошла ошибка: ' + json.message})
                     }
                 }).catch(ex => {
-                    M.toast({html: 'Произошла ошибка: ' + ex})
+                    toast({html: 'Произошла ошибка: ' + ex})
                 }).finally(() => {
                     this.loading = false;
                 });
             },
             saveMark() {
-                fetch('/api/marks/update', {
-                    method: 'post',
+                axios.post('api/marks/update', {...this.marks}, {
                     headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.marks)
-                }).then(response => {
-                    return response.json();
-                }).then(json => {
-                    if (!json.success) {
-                        M.toast({html: 'Произошла ошибка: ' + json.message})
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + this.$store.getters.token
                     }
+                }).then(response => {
+                    return response.data;
+                }).then(json => {
+                    if (!json.success) throw new Error(json.message);
                 }).catch(ex => {
-                    M.toast({html: 'Произошла ошибка: ' + ex});
+                    toast({html: 'Произошла ошибка: ' + ex.message});
                 });
             }
         },

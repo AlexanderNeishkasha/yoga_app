@@ -13,7 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::prefix('marks')->name('marks.')->group(function () {
+Route::get('tg/login', 'TelegramController@getLogin');
+Route::post('auth', 'AuthController@auth');
+Route::any('logout', 'AuthController@logout');
+
+Route::prefix('marks')->name('marks.')->middleware('auth:api')->group(function () {
    Route::get('get', 'MarksController@get');
    Route::post('update', 'MarksController@updateOrCreate');
    Route::get('statistic', 'MarksController@statistic');
