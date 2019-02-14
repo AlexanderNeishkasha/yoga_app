@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import Vue from 'vue';
 import AppMarks from './pages/marks';
 import AppStatistic from './pages/statistic';
+import AppAuth from './pages/auth';
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,11 @@ const router = new VueRouter({
             path: '/statistic',
             component: AppStatistic,
             name: 'statistic',
+        },
+        {
+            path: '/auth',
+            component: AppAuth,
+            name: 'auth',
         },
         {
             path: '/*',
