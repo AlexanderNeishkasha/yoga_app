@@ -38,7 +38,29 @@
         },
         methods: {
             auth(user) {
-                console.log(user);
+                this.loading = true;
+                axios.post('api/auth', {
+                    ...user
+                }).then(response => {
+                    return response.data;
+                }).then(response => {
+                    if (response.success) {
+                        this.saveToken(response.data.token);
+                        this.saveUserData(response.data.user);
+                    } else {
+                        throw new Error(response.message);
+                    }
+                }).catch(exception => {
+                    M.toast({html: exception.message});
+                }).finally(() => {
+                    this.loading = false;
+                });
+            },
+            saveUserData(user) {
+                localStorage.user = JSON.stringify(user);
+            },
+            saveToken(token) {
+                localStorage.token = token;
             }
         },
         beforeMount() {
