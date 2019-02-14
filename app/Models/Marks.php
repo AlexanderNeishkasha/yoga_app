@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class Marks extends Model
 {
     protected $fillable = ['date', 'morning', 'evening', 'user_id'];
     public $timestamps = false;
+    protected $attributes = [
+        'morning' => false,
+        'evening' => false
+    ];
 
     public function user()
     {

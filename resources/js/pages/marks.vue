@@ -77,10 +77,10 @@
                     if (json.success) {
                         this.marks = json.data.marks;
                     } else {
-                        toast({html: 'Произошла ошибка: ' + json.message})
+                        throw new Error(json.message);
                     }
                 }).catch(ex => {
-                    toast({html: 'Произошла ошибка: ' + ex})
+                    toast({html: 'Произошла ошибка: ' + ex.message})
                 }).finally(() => {
                     this.loading = false;
                 });
