@@ -26,8 +26,11 @@ class MarksService
             }
         }
         Marks::insert($notFoundedMarks);
-        $insertedMarks = Marks::forUser($user->id)->whereIn('date', $notFoundedMarks)->get();
-        $marks->merge($insertedMarks);
-        return $marks;
+        $insertedDates = array_map(function ($item) {
+            return $item['date'];
+        }, $notFoundedMarks);
+        $insertedMarks = Marks::forUser($user->id)->whereIn('date', $insertedDates)->get();
+        $allMarks = collect($marks->toArray())->merge($insertedMarks->toArray());
+        return $allMarks;
     }
 }

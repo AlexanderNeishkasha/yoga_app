@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateMarks;
 use App\Models\Marks;
 use App\Services\MarksService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class MarksController extends Controller
 {
