@@ -1,10 +1,14 @@
 <template>
-    <app-telegram-login
-            mode="callback"
-            telegram-login="yoga_application_bot"
-            size="large"
-            @callback="auth">
-    </app-telegram-login>
+    <div id="auth">
+        <app-telegram-login
+                mode="callback"
+                telegram-login="yoga_appliction_test_bot"
+                size="large"
+                :userpic="false"
+                radius="0"
+                @callback="auth">
+        </app-telegram-login>
+    </div>
 </template>
 
 <script>
@@ -24,5 +28,9 @@
 </script>
 
 <style scoped>
-
+    #auth {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
 </style>
