@@ -6,6 +6,7 @@ use App\Http\Requests\GetMarks;
 use App\Http\Requests\Statistic;
 use App\Http\Requests\UpdateMarks;
 use App\Models\Marks;
+use App\Models\Notification;
 use App\Services\MarksService;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,8 @@ class MarksController extends Controller
         $success = (bool) Marks::updateOrCreate(['user_id' => $user_id, 'date' => $request->date], $marksData);
         return response()->json([
             'success' => $success,
-            'message' => $success ? __('marks.success') : __('marks.error')
+            'message' => $success ? __('marks.success') : __('marks.error'),
+            'notify' => Notification::query()->inRandomOrder()->first()->message
         ]);
     }
 
