@@ -96,6 +96,7 @@
                     return response.data;
                 }).then(json => {
                     if (!json.success) throw new Error(json.message);
+                    toast({html: json.notify});
                 }).catch(ex => {
                     toast({html: 'Произошла ошибка: ' + ex.message});
                 });

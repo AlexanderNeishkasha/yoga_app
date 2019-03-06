@@ -51,6 +51,11 @@ host('yoga.yanster.one')
     ->set('cachetool', '/var/run/php/php7.2-fpm-yoga.sock');
 
 // Tasks
+desc('Execute artisan db:seed');
+task('artisan:db:seed', function () {
+    $output = run('{{bin/php}} {{release_path}}/artisan db:seed --force');
+    writeln('<info>' . $output . '</info>');
+});
 
 //env for production
 task('upload:env', function () {
