@@ -32,11 +32,17 @@ class MarksController extends Controller
     {
         $user_id = Auth::id();
         $marksData = array_merge($request->all(), ['user_id' => $user_id]);
-        $success = (bool) Marks::updateOrCreate(['user_id' => $user_id, 'date' => $request->date], $marksData);
+        $marks = Marks::query()->firstOrNew(['user_id' => $user_id, 'date' => $request->date]);
+        $notify = ((!$marks->morning && $request->morning) || (!$marks->evening && $request->evening)) ?
+            $notify = Notification::query()->inRandomOrder()->first()->message :
+            null;
+        $marks->morning = $request->morning;
+        $marks->evening = $request->evening;
+        $success = (bool) $marks->save();
         return response()->json([
             'success' => $success,
             'message' => $success ? __('marks.success') : __('marks.error'),
-            'notify' => Notification::query()->inRandomOrder()->first()->message
+            'notify' => $notify
         ]);
     }
 
