@@ -1,7 +1,3 @@
-<style scoped>
-
-</style>
-
 <template>
     <div id="marks">
         <transition enter-active-class="animated fadeIn"
@@ -96,7 +92,7 @@
                     return response.data;
                 }).then(json => {
                     if (!json.success) throw new Error(json.message);
-                    toast({html: json.notify});
+                    if (json.notify) toast({html: json.notify});
                 }).catch(ex => {
                     toast({html: 'Произошла ошибка: ' + ex.message});
                 });
